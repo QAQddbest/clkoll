@@ -16,10 +16,11 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <pthread.h>
-#include <semaphore.h>
 #include <fcntl.h>
 #include <sys/epoll.h>
+#include <errno.h>
 
+void *handleCommand(int *);
 bool setNonBlocking(int);
 
 #endif //CLKOLL_SERVER_H

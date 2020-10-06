@@ -4,12 +4,19 @@
 
 #include "client.h"
 
+extern int errno;
+
 #define PORT 8888
 #define BUF_SIZE 1024
 
 int main() {
-    int rotfd = socket(PF_INET, SOCK_DGRAM, 0);
+    int rotfd;
+    if ((rotfd = socket(PF_INET, SOCK_DGRAM, 0)) == -1) {
+        perror("socket");
+        return errno;
+    }
 
+    // Configure remote address
     struct sockaddr_in remote_addr;
     remote_addr.sin_family = PF_INET;
     remote_addr.sin_port = htons(PORT);
@@ -25,10 +32,13 @@ int main() {
         } else { // delete '\n' in the end
             buffer[strlen(buffer) - 1] = '\0';
         }
+        // Send command
         int ret = sendto(rotfd, buffer, strlen(buffer), 0, (struct sockaddr *) &remote_addr, remote_len);
-        if (ret < 0) {
+        if (ret == -1) {
             perror("Error when sending");
+            return errno;
         }
+        // Receive result
         ret = recvfrom(rotfd, buffer, BUF_SIZE, 0, (struct sockaddr *) &remote_addr, &remote_len);
         if (ret > 0) {
             buffer[ret] = '\0';

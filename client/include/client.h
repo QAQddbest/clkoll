@@ -15,9 +15,8 @@
 #include <assert.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <pthread.h>
-#include <semaphore.h>
 #include <fcntl.h>
 #include <sys/epoll.h>
+#include <errno.h>
 
 #endif //CLKOLL_CLIENT_H
