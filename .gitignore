@@ -53,7 +53,8 @@ _deps
 # *.ipr
 
 # CMake
-cmake-build-*/
+bin/
+build/
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
